@@ -15,72 +15,54 @@ function carga(){
     chrome.management.getAll(
         a=>{
             ids=a;
-            for(let i=0;i<ids.length;i++){
-                contenedor.innerHTML+="<div class='fila' id='fila"+i+"'>"+icon(ids[i])+name(ids[i].name)+button(i,ids[i].enabled)+"</div>";
-            }
-            for(let i=0;i<ids.length;i++){
-                checks[i]=document.getElementById("check"+i+"");
-                checks[i].addEventListener("click",pressed);
-            }
+            let etiqueta="";
+            ids.map((element,index)=>{
+                etiqueta+="<div class='fila' id='fila"+index+"'>"+icon(element)+name(element.name)+button(index,element.enabled)+"</div>";
+            });
+            contenedor.innerHTML=etiqueta;
+            ids.map((element,index)=>{
+                checks[index]=document.getElementById("check"+index+"");
+                checks[index].addEventListener("click",pressed);
+            });
     });
 }
 function name(name){
-    let etiqueta="";
-    etiqueta="<div class='div_ext'>"+name+"</div>";
-    return etiqueta;
+    return "<div class='div_ext'>"+name+"</div>";
 }
 function icon(id){
     let etiqueta="";
-    for(let j=0;j<id.icons.length;j++){
-        if(id.icons[j].size==128){
-            etiqueta="<img src='"+id.icons[j].url+"'>";
-        }
-    }
+    id.icons.map(element=>{if(element.size==128) etiqueta="<img src='"+element.url+"'>";});
     return etiqueta;
 }
 function button(i,check){
-    let etiqueta="",checked="";
-    if(check){
-        checked="checked";
-    }
-    etiqueta="<input id='check"+i+"' type='checkbox'"+checked+"><label for='check"+i+"'></label>";    
-    return etiqueta;
+    let checked="";
+    if(check) checked="checked";
+    return "<input id='check"+i+"' type='checkbox'"+checked+"><label for='check"+i+"'></label>";
 }
 function pressed(){
     let id=window.event.target.id;
     let num=id.split("check")[1];
     let input=document.getElementById(id);
     let id_ext=ids[num].id;
-    if(input.checked==true)
-        chrome.management.setEnabled(id_ext,true,()=>{console.log("listo")});
-    else
-        chrome.management.setEnabled(id_ext,false,()=>{console.log("listo")});
+    chrome.management.setEnabled(id_ext,input.checked);
 }
 function buscar(){
-    console.log(input.value.toUpperCase());
-    for(let i=0;i<ids.length;i++){
-        let fila=document.getElementById("fila"+i+"");
-        nombre=ids[i].name.toUpperCase();
-        if(nombre.indexOf(input.value.toUpperCase())>-1){
-            fila.style.display=""; 
-        }
-        else{
-            fila.style.display="none";
-        }
-    }
+    ids.map((element,index)=>{    
+        let display="none";
+        let fila=document.getElementById("fila"+index+"");
+        let nombre=element.name.toUpperCase();
+        if (nombre.indexOf(input.value.toUpperCase())>-1) display=""; 
+        fila.style.display=display;
+    });
 }
 function activar_desactivar(){
-    let estado=false;
-    let elemento;
-    if(window.event.target.id=="habilitar"){
-        estado=true;
-    }
-    for(let i=0;i<ids.length;i++){
-        if(chrome.runtime.id!=ids[i].id){
-            chrome.management.setEnabled(ids[i].id,estado,()=>{
-                elemento=document.getElementById("check"+i);
+    let estado=false,elemento;
+    if(window.event.target.id=="habilitar") estado=true;
+    ids.map((element,index)=>{
+        if(chrome.runtime.id!=element.id)
+            chrome.management.setEnabled(element.id,estado,()=>{
+                elemento=document.getElementById("check"+index);
                 elemento.checked=estado;
             });
-        }
-    }
+    });
 }
