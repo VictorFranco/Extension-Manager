@@ -3,11 +3,13 @@ const input=document.getElementById("search");
 const all_enabled=document.getElementById("all_enabled");
 const all_disabled=document.getElementById("all_disabled");
 const div=document.createElement("DIV");
+const btn_close=document.getElementById("close");
 let checks=[];
 let extensions=[];
 input.addEventListener("keyup",search);
 all_enabled.addEventListener("click",activate_desactivate);
 all_disabled.addEventListener("click",activate_desactivate);
+btn_close.addEventListener("click",()=>window.close());
 load();
 function load(){
     chrome.management.getAll(
