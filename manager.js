@@ -17,7 +17,7 @@ function load(){
                 return `<div class="row" id="row${index}">${icon(extension)+name(extension.name)+button(index,extension.enabled)}</div>`;
             }).reduce((a,b)=>a+b);
             container.innerHTML=html_elements;
-            extensions.map((element,index)=>{
+            extensions.forEach((element,index)=>{
                 checks[index]=document.getElementById(`check${index}`);
                 checks[index].addEventListener("click",pressed);
             });
@@ -28,7 +28,7 @@ const name=name=>{
 };
 const icon=extension=>{
     let html_element="";
-    extension.icons.map(ext_icon=>{if(ext_icon.size==128) html_element=`<img src="${ext_icon.url}">`;});
+    extension.icons.forEach(ext_icon=>{if(ext_icon.size==128) html_element=`<img src="${ext_icon.url}">`;});
     return html_element;
 };
 const button=(i,check)=>{
@@ -44,7 +44,7 @@ function pressed(){
     chrome.management.setEnabled(id_ext,input.checked);
 }
 function search(){
-    extensions.map((element,index)=>{    
+    extensions.forEach((element,index)=>{    
         let display="none";
         let row=document.getElementById(`row${index}`);
         let nombre=element.name.toUpperCase();
@@ -55,7 +55,7 @@ function search(){
 function activate_desactivate(){
     let state=false,toggle;
     if(window.event.target.id=="all_enabled") state=true;
-    extensions.map((extension,index)=>{
+    extensions.forEach((extension,index)=>{
         if(chrome.runtime.id!=extension.id)
             chrome.management.setEnabled(extension.id,state,()=>{
                 toggle=document.getElementById(`check${index}`);
