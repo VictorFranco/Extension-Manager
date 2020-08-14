@@ -44,6 +44,7 @@ img{
 }
 .row{
     display: grid;
+    position: relative;/*cambio*/
     width: 93%;
     grid-gap: 10px;
     grid-template-columns: 60px 1fr 80px;
@@ -83,6 +84,8 @@ label{
     display: block;
     border-radius: 15px;
     margin: auto;
+    box-shadow: 0 0 0 1.4px steelblue;
+    cursor: pointer;
 }
 label::before{
     display: flex;
@@ -101,7 +104,12 @@ label::before{
     transform: scale(.8);
 }
 input[type="checkbox"]{
-    display: none;
+    position: absolute;
+    z-index: -1;
+    height: 100%;
+}
+input:focus+label{
+    box-shadow: 0 0 0 1.4px lightblue;
 }
 input:checked+label{
     background: var(--background_label_checked);
@@ -133,4 +141,19 @@ input:checked+label::before{
 }
 .all_disabled{
     background: #0E2533;
+}
+.all_enabled:focus,.all_disabled:focus{
+    box-shadow: 0 0 0 2px darkslategrey inset;
+}
+#close{
+    background: white;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    border-radius: 50%;
+    border: 0;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 2px 6px;
+    cursor: pointer;
 }
