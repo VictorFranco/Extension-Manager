@@ -16,7 +16,7 @@ function load(){
         array=>{
             extensions=array;
             let html_elements=extensions.map((extension,index)=>{
-                return `<div class="row" id="row${index}">${icon(extension)+name(extension.name)+button(index,extension.enabled)}</div>`;
+                return `<div class="row" id="row${index}">${icon(extension)+name_(extension.name)+button(index,extension.enabled)}</div>`;
             }).reduce((a,b)=>a+b);
             container.innerHTML=html_elements;
             extensions.forEach((element,index)=>{
@@ -25,7 +25,7 @@ function load(){
             });
     });
 }
-const name=name=>{
+const name_=name=>{
     return `<div class="div_ext">${name}</div>`;
 };
 const icon=extension=>{
@@ -39,9 +39,9 @@ const button=(i,check)=>{
     return `<input id="check${i}" type="checkbox" ${checked}><label for="check${i}"></label>`;
 };
 function pressed(){
-    let id=window.event.target.id;
+    let id=(window.event.target as HTMLInputElement).id;
     let num=id.split("check")[1];
-    let input=document.getElementById(id);
+    let input=document.getElementById(id) as HTMLInputElement;
     let id_ext=extensions[num].id;
     chrome.management.setEnabled(id_ext,input.checked);
 }
@@ -50,13 +50,13 @@ function search(){
         let display="none";
         let row=document.getElementById(`row${index}`);
         let nombre=element.name.toUpperCase();
-        if (nombre.indexOf(input.value.toUpperCase())>-1) display=""; 
+        if (nombre.indexOf((input as HTMLInputElement).value.toUpperCase())>-1) display=""; 
         row.style.display=display;
     });
 }
 function activate_desactivate(){
     let state=false,toggle;
-    if(window.event.target.id=="all_enabled") state=true;
+    if((window.event.target as HTMLButtonElement).id=="all_enabled") state=true;
     extensions.forEach((extension,index)=>{
         if(chrome.runtime.id!=extension.id)
             chrome.management.setEnabled(extension.id,state,()=>{
