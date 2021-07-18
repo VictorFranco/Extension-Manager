@@ -1,0 +1,30 @@
+{
+  "name": "administrador-de-extensiones",
+  "version": "1.0.0",
+  "description": "Una extension de Chrome que facilita habilitar y deshabilitar las extensiones instaladas.",
+  "main": "manager.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VictorFranco/Administrador-de-Extensiones.git"
+  },
+  "keywords": [
+    "Browser",
+    "Extension",
+    "Manager"
+  ],
+  "author": "Victor Franco",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VictorFranco/Administrador-de-Extensiones/issues"
+  },
+  "homepage": "https://github.com/VictorFranco/Administrador-de-Extensiones#readme",
+  "devDependencies": {
+    "typescript": "^4.3.5"
+  }
+}
