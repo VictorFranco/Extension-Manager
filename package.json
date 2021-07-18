@@ -26,5 +26,8 @@
   "homepage": "https://github.com/VictorFranco/Administrador-de-Extensiones#readme",
   "devDependencies": {
     "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@types/chrome": "^0.0.147"
   }
 }
