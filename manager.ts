@@ -5,7 +5,13 @@ const all_disabled : HTMLElement = document.getElementById("all_disabled")
 const div          : HTMLElement = document.createElement("DIV")
 const btn_close    : HTMLElement = document.getElementById("close")
 let checks         : HTMLInputElement[] = []
-let extensions = []
+
+type Extension = chrome.management.ExtensionInfo
+let extensions : Extension[] = []
+
+interface IconsInterface{
+    icons:[{url:string,size:number}]
+}
 
 input.addEventListener("keyup",search)
 all_enabled.addEventListener("click",activate_desactivate)
@@ -18,12 +24,13 @@ function load(){
     chrome.management.getAll(
         array=>{
             extensions=array
-            let html_elements=extensions.map((extension,index)=>{
-                return `<div class="row" id="row${index}">${
-                    icon(extension)+
-                    name_(extension.name)+
-                    button(index,extension.enabled)
-                }</div>`
+            let html_elements=extensions.map(
+                (extension:Extension & IconsInterface,index:number)=>{
+                    return `<div class="row" id="row${index}">${
+                        icon(extension)+
+                        name_(extension.name)+
+                        button(index,extension.enabled)
+                    }</div>`
             }).reduce((a,b)=>a+b)
             container.innerHTML=html_elements
             extensions.forEach((_,index)=>{
@@ -37,11 +44,7 @@ const name_=(name:string)=>{
     return `<div class="div_ext">${name}</div>`
 }
 
-interface IExtension{
-    icons:[{url:string,size:number}]
-}
-
-const icon=(extension:IExtension)=>{
+const icon=(extension:IconsInterface)=>{
     let html_element=""
     extension.icons.forEach(ext_icon=>{
         if(ext_icon.size==128) html_element=`<img src="${ext_icon.url}">`
