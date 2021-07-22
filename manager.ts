@@ -45,7 +45,7 @@ const name_=(name:string):string=>{
 }
 
 const icon=(extension:IconsInterface):string=>{
-    let html_element=""
+    let html_element:string=""
     extension.icons.forEach((ext_icon):void=>{
         if(ext_icon.size==128) html_element=`<img src="${ext_icon.url}">`
     })
@@ -53,33 +53,34 @@ const icon=(extension:IconsInterface):string=>{
 }
 
 const button=(i:number,check:boolean):string=>{
-    let checked=""
-    if(check) checked="checked"
+    let checked:string=check?"checked":""
     return `<input id="check${i}" type="checkbox" ${checked}>
             <label for="check${i}"></label>`
 }
 
 function pressed():void{
-    let id=(window.event.target as HTMLInputElement).id
-    let num=id.split("check")[1]
-    let input=document.getElementById(id) as HTMLInputElement
-    let id_ext=extensions[num].id
+    let input:HTMLInputElement
+    input = window.event.target as HTMLInputElement
+    let id:string     = input.id
+    let num:number    = Number(id.split("check")[1])
+    let id_ext:string = extensions[num].id
+    input = document.getElementById(id) as HTMLInputElement
     chrome.management.setEnabled(id_ext,input.checked)
 }
 
 function search():void{
     extensions.forEach((element:Extension,index:number):void=>{
-        let display="none"
-        let row=document.getElementById(`row${index}`) as HTMLDivElement
-        let nombre=element.name.toUpperCase()
-        if (nombre.indexOf(input.value.toUpperCase())>-1) display=""
-        row.style.display=display
+        let row:HTMLDivElement = document.getElementById(`row${index}`) as HTMLDivElement
+        let nombre:string      = element.name.toUpperCase()
+        let is_similar:boolean = nombre.indexOf(input.value.toUpperCase())>-1
+        row.style.display      = is_similar?"":"none"
     })
 }
 
 function activate_desactivate():void{
-    let state=false,toggle:HTMLInputElement
-    if((window.event.target as HTMLButtonElement).id=="all_enabled") state=true
+    let toggle:HTMLInputElement
+    let btn:HTMLButtonElement = window.event.target as HTMLButtonElement
+    let state:boolean         = btn.id=="all_enabled"
     extensions.forEach((extension:Extension,index:number):void=>{
         if(chrome.runtime.id!=extension.id)
             chrome.management.setEnabled(extension.id,state,():void=>{
