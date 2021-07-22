@@ -13,7 +13,7 @@ interface IconsInterface{
     icons:[{url:string,size:number}]
 }
 
-/*    <---Callback: Extension with index*/
+/*    <---Callback: Extension with index--->    */
 interface IExt_i<Return>{
     (extension:Extension,index:number):Return
 }
@@ -58,11 +58,11 @@ const name_=(name:string):string=>{
 }
 
 const icon=(extension:IconsInterface):string=>{
-    let html_element:string=""
+    let src:string=""
     extension.icons.forEach((ext_icon):void=>{
-        if(ext_icon.size==128) html_element=`<img src="${ext_icon.url}">`
+        if(ext_icon.size==128) src = ext_icon.url
     })
-    return html_element
+    return `<img src="${src||""}">`
 }
 
 const button=(i:number,check:boolean):string=>{
