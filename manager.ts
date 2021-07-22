@@ -27,7 +27,7 @@ function load():void{
 
             /*    <---Create HTML structure--->    */
             let html_elements:string=extensions.map(
-                (extension,index)=>html_extension(extension,index)
+                html_extension
             ).reduce((a:string,b:string):string=>a+b)
 
             /*    <---Update DOM--->    */
@@ -76,23 +76,25 @@ function pressed():void{
 }
 
 function search():void{
-    extensions.forEach((element:Extension,index:number):void=>{
+    let callback=(element:Extension,index:number):void=>{
         let row:HTMLDivElement = document.getElementById(`row${index}`) as HTMLDivElement
         let nombre:string      = element.name.toUpperCase()
         let is_similar:boolean = nombre.indexOf(input.value.toUpperCase())>-1
         row.style.display      = is_similar?"":"none"
-    })
+    }
+    extensions.forEach(callback)
 }
 
 function activate_desactivate():void{
     let toggle:HTMLInputElement
     let btn:HTMLButtonElement = window.event.target as HTMLButtonElement
     let state:boolean         = btn.id=="all_enabled"
-    extensions.forEach((extension:Extension,index:number):void=>{
+    let callback=(extension:Extension,index:number):void=>{
         if(chrome.runtime.id!=extension.id)
             chrome.management.setEnabled(extension.id,state,():void=>{
                 toggle=document.getElementById(`check${index}`) as HTMLInputElement
                 toggle.checked=state
             })
-    })
+    }
+    extensions.forEach(callback)
 }
