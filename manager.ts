@@ -13,6 +13,11 @@ interface IconsInterface{
     icons:[{url:string,size:number}]
 }
 
+/*    <---Callback: Extension with index*/
+interface IExt_i<Return>{
+    (extension:Extension,index:number):Return
+}
+
 input.addEventListener("keyup",search)
 all_enabled.addEventListener("click",activate_desactivate)
 all_disabled.addEventListener("click",activate_desactivate)
@@ -32,14 +37,15 @@ function load():void{
 
             /*    <---Update DOM--->    */
             container.innerHTML=html_elements
-            extensions.forEach((_:any,index:number):void=>{
+            let callback:IExt_i<void>=(_,index)=>{
                 checks[index]=document.getElementById(`check${index}`) as HTMLInputElement
                 checks[index].addEventListener("click",pressed)
-            })
+            }
+            extensions.forEach(callback)
     })
 }
 
-const html_extension=(extension:Extension,index:number):string=>{
+const html_extension:IExt_i<string>=(extension,index)=>{
     return `<div class="row" id="row${index}">${
         icon(extension as unknown as IconsInterface)+
         name_(extension.name)+
@@ -76,9 +82,9 @@ function pressed():void{
 }
 
 function search():void{
-    let callback=(element:Extension,index:number):void=>{
+    let callback:IExt_i<void>  = (extension,index)=>{
         let row:HTMLDivElement = document.getElementById(`row${index}`) as HTMLDivElement
-        let nombre:string      = element.name.toUpperCase()
+        let nombre:string      = extension.name.toUpperCase()
         let is_similar:boolean = nombre.indexOf(input.value.toUpperCase())>-1
         row.style.display      = is_similar?"":"none"
     }
@@ -89,7 +95,7 @@ function activate_desactivate():void{
     let toggle:HTMLInputElement
     let btn:HTMLButtonElement = window.event.target as HTMLButtonElement
     let state:boolean         = btn.id=="all_enabled"
-    let callback=(extension:Extension,index:number):void=>{
+    let callback:IExt_i<void> = (extension,index)=>{
         if(chrome.runtime.id!=extension.id)
             chrome.management.setEnabled(extension.id,state,():void=>{
                 toggle=document.getElementById(`check${index}`) as HTMLInputElement
