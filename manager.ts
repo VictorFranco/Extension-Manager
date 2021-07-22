@@ -25,9 +25,9 @@ function load():void{
         (array):void=>{
             extensions=array
             let html_elements:string=extensions.map(
-                (extension:Extension & IconsInterface,index:number):string=>{
+                (extension:Extension,index:number):string=>{
                     return `<div class="row" id="row${index}">${
-                        icon(extension)+
+                        icon(extension as unknown as IconsInterface)+
                         name_(extension.name)+
                         button(index,extension.enabled)
                     }</div>`
