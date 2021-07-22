@@ -24,20 +24,27 @@ function load():void{
     chrome.management.getAll(
         (array):void=>{
             extensions=array
+
+            /*    <---Create HTML structure--->    */
             let html_elements:string=extensions.map(
-                (extension:Extension,index:number):string=>{
-                    return `<div class="row" id="row${index}">${
-                        icon(extension as unknown as IconsInterface)+
-                        name_(extension.name)+
-                        button(index,extension.enabled)
-                    }</div>`
-            }).reduce((a:string,b:string):string=>a+b)
+                (extension,index)=>html_extension(extension,index)
+            ).reduce((a:string,b:string):string=>a+b)
+
+            /*    <---Update DOM--->    */
             container.innerHTML=html_elements
             extensions.forEach((_:any,index:number):void=>{
                 checks[index]=document.getElementById(`check${index}`) as HTMLInputElement
                 checks[index].addEventListener("click",pressed)
             })
     })
+}
+
+const html_extension=(extension:Extension,index:number):string=>{
+    return `<div class="row" id="row${index}">${
+        icon(extension as unknown as IconsInterface)+
+        name_(extension.name)+
+        button(index,extension.enabled)
+    }</div>`
 }
 
 const name_=(name:string):string=>{
