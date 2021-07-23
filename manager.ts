@@ -9,8 +9,9 @@ let checks         : HTMLInputElement[] = []
 type Extension = chrome.management.ExtensionInfo
 let extensions : Extension[] = []
 
+type Icon = {url:string,size:number}
 interface IconsInterface{
-    icons:[{url:string,size:number}]
+    icons:[Icon]
 }
 
 /*    <---Callback: Extension with index--->    */
@@ -47,9 +48,9 @@ function load():void{
 
 const html_extension:IExt_i<string>=(extension,index)=>{
     return `<div class="row" id="row${index}">${
-        icon(extension as unknown as IconsInterface)+
+        icon_(extension as unknown as IconsInterface)+
         name_(extension.name)+
-        button(index,extension.enabled)
+        button_(index,extension.enabled)
     }</div>`
 }
 
@@ -57,15 +58,14 @@ const name_=(name:string):string=>{
     return `<div class="div_ext">${name}</div>`
 }
 
-const icon=(extension:IconsInterface):string=>{
-    let src:string=""
-    extension.icons.forEach((ext_icon):void=>{
-        if(ext_icon.size==128) src = ext_icon.url
-    })
-    return `<img src="${src||""}">`
+const icon_=(extension:IconsInterface):string=>{
+    let img:Icon = extension.icons.filter(
+        (item):boolean => item.size==128
+    )[0]
+    return `<img src="${ img.url ?? "" }">`
 }
 
-const button=(i:number,check:boolean):string=>{
+const button_=(i:number,check:boolean):string=>{
     let checked:string=check?"checked":""
     return `<input id="check${i}" type="checkbox" ${checked}>
             <label for="check${i}"></label>`
@@ -84,8 +84,8 @@ function pressed():void{
 function search():void{
     let callback:IExt_i<void>  = (extension,index)=>{
         let row:HTMLDivElement = document.getElementById(`row${index}`) as HTMLDivElement
-        let nombre:string      = extension.name.toUpperCase()
-        let is_similar:boolean = nombre.indexOf(input.value.toUpperCase())>-1
+        let name:string        = extension.name.toUpperCase()
+        let is_similar:boolean = name.indexOf(input.value.toUpperCase())>-1
         row.style.display      = is_similar?"":"none"
     }
     extensions.forEach(callback)
@@ -93,13 +93,13 @@ function search():void{
 
 function activate_desactivate():void{
     let toggle:HTMLInputElement
-    let btn:HTMLButtonElement = window.event.target as HTMLButtonElement
-    let state:boolean         = btn.id=="all_enabled"
-    let callback:IExt_i<void> = (extension,index)=>{
-        if(chrome.runtime.id!=extension.id)
+    let btn:HTMLButtonElement  = window.event.target as HTMLButtonElement
+    let state:boolean          = btn.id=="all_enabled"
+    let callback:IExt_i<void>  = (extension,index)=>{
+        if(chrome.runtime.id  != extension.id)
             chrome.management.setEnabled(extension.id,state,():void=>{
                 toggle=document.getElementById(`check${index}`) as HTMLInputElement
-                toggle.checked=state
+                toggle.checked = state
             })
     }
     extensions.forEach(callback)

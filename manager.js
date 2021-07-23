@@ -26,22 +26,19 @@ function load() {
     });
 }
 var html_extension = function (extension, index) {
-    return "<div class=\"row\" id=\"row" + index + "\">" + (icon(extension) +
+    return "<div class=\"row\" id=\"row" + index + "\">" + (icon_(extension) +
         name_(extension.name) +
-        button(index, extension.enabled)) + "</div>";
+        button_(index, extension.enabled)) + "</div>";
 };
 var name_ = function (name) {
     return "<div class=\"div_ext\">" + name + "</div>";
 };
-var icon = function (extension) {
-    var src = "";
-    extension.icons.forEach(function (ext_icon) {
-        if (ext_icon.size == 128)
-            src = ext_icon.url;
-    });
-    return "<img src=\"" + (src || "") + "\">";
+var icon_ = function (extension) {
+    var _a;
+    var img = extension.icons.filter(function (item) { return item.size == 128; })[0];
+    return "<img src=\"" + ((_a = img.url) !== null && _a !== void 0 ? _a : "") + "\">";
 };
-var button = function (i, check) {
+var button_ = function (i, check) {
     var checked = check ? "checked" : "";
     return "<input id=\"check" + i + "\" type=\"checkbox\" " + checked + ">\n            <label for=\"check" + i + "\"></label>";
 };
@@ -57,8 +54,8 @@ function pressed() {
 function search() {
     var callback = function (extension, index) {
         var row = document.getElementById("row" + index);
-        var nombre = extension.name.toUpperCase();
-        var is_similar = nombre.indexOf(input.value.toUpperCase()) > -1;
+        var name = extension.name.toUpperCase();
+        var is_similar = name.indexOf(input.value.toUpperCase()) > -1;
         row.style.display = is_similar ? "" : "none";
     };
     extensions.forEach(callback);
