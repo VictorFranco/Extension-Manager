@@ -4,8 +4,9 @@ Una extension de Chrome que facilita habilitar y deshabilitar las extensiones in
 <img src="docs/Screenshot.PNG" width="400">
 
 Documentación:
-* [Chrome documentation](https://developer.chrome.com/extensions/management "The chrome.management API")
-* [Grid Layout](https://developer.mozilla.org/es/docs/Web/CSS/CSS_Grid_Layout "Css")
+* [Chrome Documentation](https://developer.chrome.com/extensions/management "The chrome.management API")
+* [TypeScript Documentation](https://www.typescriptlang.org/docs/ "TypeScript")
+* [Grid Layout MDN](https://developer.mozilla.org/es/docs/Web/CSS/CSS_Grid_Layout "CSS")
 ___
 ## Actualización
 Ahora se puede usar por medio del teclado
