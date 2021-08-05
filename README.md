@@ -1,4 +1,8 @@
 # Administrador-de-Extensiones
+![](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white&labelColor=101010)
+![](https://img.shields.io/badge/typescript-2D79C7?style=for-the-badge&logo=typescript&logoColor=white&labelColor=101010)
+![](https://img.shields.io/badge/extension-195228?style=for-the-badge&logo=googlechrome&logoColor=white&labelColor=101010)
+
 Una extension de Chrome que facilita habilitar y deshabilitar las extensiones instaladas.
 
 <img src="docs/Screenshot.PNG" width="400">
