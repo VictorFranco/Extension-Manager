@@ -19,28 +19,28 @@ function load() {
         /*    <---Update DOM--->    */
         container.innerHTML = html_elements;
         var callback = function (_, index) {
-            checks[index] = document.getElementById("check" + index);
+            checks[index] = document.getElementById("check".concat(index));
             checks[index].addEventListener("click", pressed);
         };
         extensions.forEach(callback);
     });
 }
 var html_extension = function (extension, index) {
-    return "<div class=\"row\" id=\"row" + index + "\">" + (icon_(extension) +
+    return "<div class=\"row\" id=\"row".concat(index, "\">").concat(icon_(extension) +
         name_(extension.name) +
-        button_(index, extension.enabled)) + "</div>";
+        button_(index, extension.enabled), "</div>");
 };
 var name_ = function (name) {
-    return "<div class=\"div_ext\">" + name + "</div>";
+    return "<div class=\"div_ext\">".concat(name, "</div>");
 };
 var icon_ = function (extension) {
     var _a;
     var img = extension.icons.filter(function (item) { return item.size == 128; })[0];
-    return "<img src=\"" + ((_a = img.url) !== null && _a !== void 0 ? _a : "") + "\">";
+    return "<img src=\"".concat((_a = img.url) !== null && _a !== void 0 ? _a : "", "\">");
 };
 var button_ = function (i, check) {
     var checked = check ? "checked" : "";
-    return "<input id=\"check" + i + "\" type=\"checkbox\" " + checked + ">\n            <label for=\"check" + i + "\"></label>";
+    return "<input id=\"check".concat(i, "\" type=\"checkbox\" ").concat(checked, ">\n            <label for=\"check").concat(i, "\"></label>");
 };
 function pressed() {
     var input;
@@ -53,7 +53,7 @@ function pressed() {
 }
 function search() {
     var callback = function (extension, index) {
-        var row = document.getElementById("row" + index);
+        var row = document.getElementById("row".concat(index));
         var name = extension.name.toUpperCase();
         var is_similar = name.indexOf(input.value.toUpperCase()) > -1;
         row.style.display = is_similar ? "" : "none";
@@ -67,7 +67,7 @@ function activate_desactivate() {
     var callback = function (extension, index) {
         if (chrome.runtime.id != extension.id)
             chrome.management.setEnabled(extension.id, state, function () {
-                toggle = document.getElementById("check" + index);
+                toggle = document.getElementById("check".concat(index));
                 toggle.checked = state;
             });
     };
