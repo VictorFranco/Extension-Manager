@@ -43,7 +43,7 @@ img{
 }
 .row{
     display: grid;
-    position: relative;/*cambio*/
+    position: relative;
     width: 93%;
     grid-gap: 10px;
     grid-template-columns: 60px 1fr 80px;
@@ -64,6 +64,7 @@ h1{
 }
 .header{
     display: grid;
+    position: relative;
     background: rgb(20,20,20);
     grid-template-columns: 120px 1fr;
     grid-template-rows: 50px;
