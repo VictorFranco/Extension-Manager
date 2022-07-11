@@ -1,39 +1,54 @@
-# Administrador-de-Extensiones
-![](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white&labelColor=101010)
-![](https://img.shields.io/badge/typescript-2D79C7?style=for-the-badge&logo=typescript&logoColor=white&labelColor=101010)
-![](https://img.shields.io/badge/extension-195228?style=for-the-badge&logo=googlechrome&logoColor=white&labelColor=101010)
+# Extension-Manager
+![Javascript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white&labelColor=101010)
+![TypeScript](https://img.shields.io/badge/typescript-2D79C7?style=for-the-badge&logo=typescript&logoColor=white&labelColor=101010)
+![ChromeExtension](https://img.shields.io/badge/extension-195228?style=for-the-badge&logo=googlechrome&logoColor=white&labelColor=101010)
 
-Una extension de Chrome que facilita habilitar y deshabilitar las extensiones instaladas.
+A Chrome extension which manages your extensions. Extension Manager also has
+support for keyboard navigation.
 
-<img src="docs/Screenshot.PNG" width="400">
+![Extension Manager](https://i.imgur.com/yb3YB5z.png "Extension Manager")
 
-Documentación:
-* [Chrome Documentation](https://developer.chrome.com/extensions/management "The chrome.management API")
-* [TypeScript Documentation](https://www.typescriptlang.org/docs/ "TypeScript")
+## How to install Extension Manager
+Steps:
+1. Clone this repository
+2. Go to [chrome://extensions/](chrome://extensions/)
+3. Enable Developer Mode
+4. Click on **Load unpacked** button
+5. Select repository local folder
+6. Click on puzzle icon <img alt="Extension icon" src="https://i.imgur.com/Mz4oQAy.png" width="16"/> on toolbar
+7. Pin the Extension Manager
+
+In order to open the extension, you have to click on Extension Manager icon
+<img alt="Extension Manager icon" src="manager.png" width="16"/>.
+
+## Keyboard navigation
+Steps to open extension:
+1. Press **F10**
+2. Set focus on Extension Manager icon <img alt="Extension Manager icon" src="manager.png" width="16"/> using **Tab** key
+3. Press **Enter**
+
+If you want to change the focused element, you have to press the **Tab** key.
+
+When the focus is on any toggle button, you can press the **Space** key to
+change the state of its extension.
+
+## Screenshots
+Extension enabled:
+
+![Extension enabled](https://i.imgur.com/LCYqEXp.png "Extension enabled")
+
+Extension disabled:
+
+![Extension disabled](https://i.imgur.com/vBi2qEW.png "Extension disabled")
+
+Enable/Disable all buttons
+
+![Enable/Disable all buttons](https://i.imgur.com/lzQjdv6.png "Enable/Disable all buttons")
+
+## Documentation of the technologies used
+* [Chrome Extensions](https://developer.chrome.com/extensions/management "The chrome.management API")
+* [TypeScript](https://www.typescriptlang.org/docs/ "TypeScript")
 * [Grid Layout MDN](https://developer.mozilla.org/es/docs/Web/CSS/CSS_Grid_Layout "CSS")
-___
-## Actualización
-Ahora se puede usar por medio del teclado
 
-Si el icono de extensión 
-<img src="manager.png" width="20">
-está a la derecha de la barra de herramientas de Chrome
-
-Pasos:
-1. Presionar f10
-2. Posicionar el foco en el administrador 
-3. Presionar enter  
-
-Si no está en la barra, debe haber una en ella llamada Extensiones, solo debes fijar el Administrador y seguir los anteriores pasos   
-### Screenshots
-El botón de una extensión activa
-
-<img src="docs/Focus_btn_enabled.PNG" width="400">
-
-Cuando está desactivada
-
-<img src="docs/Focus_btn_disabled.PNG" width="400">
-
-Así lucen los botones generales
-
-<img src="docs/Focus_btn_all_enabled.PNG" width="400">
+## LICENSE
+[GPLv3.0](LICENSE)
